@@ -12,8 +12,18 @@ def create_user(db: Session, name: str, email: str, age: int):
     )
 
 
-def get_users(db: Session):
-    return user_repository.get_users(db)
+def get_users(
+    db: Session,
+    skip: int = 0,
+    limit: int = 10,
+    name: str | None = None
+):
+    return user_repository.get_users(
+        db=db,
+        skip=skip,
+        limit=limit,
+        name=name
+    )
 
 
 def get_user(db: Session, user_id: int):
