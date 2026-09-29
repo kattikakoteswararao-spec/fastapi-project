@@ -24,12 +24,19 @@ def create_user(
         age=user.age
     )
 
-
 @router.get("/")
 def get_users(
+    skip: int = 0,
+    limit: int = 10,
+    name: str | None = None,
     db: Session = Depends(get_db)
 ):
-    return user_service.get_users(db)
+    return user_service.get_users(
+        db=db,
+        skip=skip,
+        limit=limit,
+        name=name
+    )
 
 
 @router.get("/{user_id}")
