@@ -17,8 +17,18 @@ def create_user(db: Session, name: str, email: str, age: int):
     return new_user
 
 
-def get_users(db: Session):
-    return db.query(User).all()
+def get_users(
+    db: Session,
+    skip: int = 0,
+    limit: int = 10,
+    name: str | None = None
+):
+    query = db.query(User)
+
+    if name:
+        query = query.filter(User.name.ilike(f"%{name}%"))
+
+    return query.offset(skip).limit(limit).all()
 
 
 def get_user_by_id(db: Session, user_id: int):
